@@ -3,9 +3,11 @@
  */
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Random;
 
 public class TicTacToe {
     Scanner scan = new Scanner(System.in);
+    Random generator = new Random();
     private int [][] board;
     private final int SIZE = 3;
 
@@ -35,8 +37,18 @@ public class TicTacToe {
 
     }
 
-    private void computer_move() {
-
+    private void computerMove() {
+    	int compPlacement = generator.nextInt(10);
+    	boolean moveMade = false;
+    	
+    	while (moveMade != true){
+    		if (board[(compPlacement)/3][(compPlacement) % 3] == 0 ) {
+    			board[(compPlacement)/3][(compPlacement) % 3] = 2;
+    			moveMade = true;
+    		} else {
+    			compPlacement = generator.nextInt(10);
+    		} // end of if
+    	} // end of while
     }
 
     public void play() {
@@ -50,8 +62,10 @@ public class TicTacToe {
         boolean done = false;
 
         while (done != true){
-            myGame.play();
-            myGame.drawBoard();
+        	myGame.drawBoard();
+        	myGame.play();
+            myGame.computerMove();
+            
         }
     }
 }
