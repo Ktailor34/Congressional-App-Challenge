@@ -13,11 +13,11 @@ public class TicTacToe {
 	private int[][] computerBoard;
 	private int[][][] winConditions;
 	private final int SIZE = 3;
-    boolean finish = false;
-
+    private int gameCount;
 
 	// Constructor
 	public TicTacToe() {
+	    gameCount = 0;
 		board = new int[SIZE][SIZE];
 		playerBoard = new int[SIZE][SIZE];
 		computerBoard = new int[SIZE][SIZE];
@@ -120,24 +120,15 @@ public class TicTacToe {
         int[][] result = new int[3][3];
 
 	    for (int k = 0; k < 7; k++) {
+	        int r, c;
             int[][] winBoard = winConditions[k];
-
-            // Check winBoards
-            /*for (int r = 0; r < SIZE; r++) {
-                for (int c = 0; c < SIZE; c++) {
-                    System.out.print(winBoard[r][c] + " ");
-                    if (c  == 2) {
-                        System.out.println();
-                    }
-                }
-            }*/
 
             for(int[] row : result) {
                 Arrays.fill(row, 0);
             }
-            for (int i = 0; i < playerBoard.length; i++) {
-                for (int j = 0; j < playerBoard[i].length; j++) {
-                    result[i][j] = playerBoard[i][j] & winBoard[i][j];
+            for (r = 0; r < playerBoard.length; r++) {
+                for (c = 0; c < playerBoard[r].length; c++) {
+                    result[r][c] = playerBoard[r][c] & winBoard[r][c];
                     if (Arrays.deepEquals(result, winBoard)) {
                         System.out.println("Player Wins!");
                         return true;
@@ -148,9 +139,9 @@ public class TicTacToe {
             for(int[] row: result) {
                 Arrays.fill(row, 0);
             }
-            for (int i = 0; i < computerBoard.length; i++) {
-                for (int j = 0; j < computerBoard[i].length; j++) {
-                    result[i][j] = computerBoard[i][j] & winBoard[i][j];
+            for (r = 0; r < computerBoard.length; r++) {
+                for (c = 0; c < computerBoard[r].length; c++) {
+                    result[r][c] = computerBoard[r][c] & winBoard[r][c];
                     if (Arrays.deepEquals(result, winBoard)) {
                         System.out.println("Computer Wins!");
                         return true;
@@ -158,15 +149,19 @@ public class TicTacToe {
                 }
             }
         }
+
+        if(gameCount == 9) return true;
+        gameCount++;
         return false;
 	}
 
 
 	public void play() {
 		while(!gameOver()) {
-			drawBoard();
-			playerMove();
-			computerMove();
+            computerMove();
+            drawBoard();
+            if(!gameOver()) playerMove();
+            else break;
 		}
 	}
 
