@@ -119,7 +119,7 @@ public class TicTacToe {
 	private boolean gameOver() {
         int[][] result = new int[3][3];
 
-	    for (int k = 0; k < 7; k++) {
+	    for (int k = 0; k < 8; k++) {
 	        int r, c;
             int[][] winBoard = winConditions[k];
 
