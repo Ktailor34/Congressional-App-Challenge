@@ -1,22 +1,26 @@
 /**
  * Created by s738110 on 9/3/16.
  */
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Random;
 
-public class TicTacToe {
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class TicTacToe implements Game {
 	Scanner scan = new Scanner(System.in);
 	Random generator = new Random();
 	private int[][] board;
 	private int[][] playerBoard;
 	private int[][] computerBoard;
 	private int[][][] winConditions;
+	private Player activePlayer;
+	private Player inactivePlayer;
 	private final int SIZE = 3;
     private int gameCount;
 
 	// Constructor
-	public TicTacToe() {
+	public TicTacToe(Player p1, Player p2) {
 	    gameCount = 0;
 		board = new int[SIZE][SIZE];
 		playerBoard = new int[SIZE][SIZE];
@@ -117,57 +121,85 @@ public class TicTacToe {
 	}
 
 	private boolean gameOver() {
-        int[][] result = new int[3][3];
+		int[][] result = new int[3][3];
 
-	    for (int k = 0; k < 8; k++) {
-	        int r, c;
-            int[][] winBoard = winConditions[k];
+		for (int k = 0; k < 8; k++) {
+			int r, c;
+			int[][] winBoard = winConditions[k];
 
-            for(int[] row : result) {
-                Arrays.fill(row, 0);
-            }
-            for (r = 0; r < playerBoard.length; r++) {
-                for (c = 0; c < playerBoard[r].length; c++) {
-                    result[r][c] = playerBoard[r][c] & winBoard[r][c];
-                    if (Arrays.deepEquals(result, winBoard)) {
-                        System.out.println("Player Wins!");
-                        return true;
-                    }
-                }
-            }
+			for (int[] row : result) {
+				Arrays.fill(row, 0);
+			}
+			for (r = 0; r < playerBoard.length; r++) {
+				for (c = 0; c < playerBoard[r].length; c++) {
+					result[r][c] = playerBoard[r][c] & winBoard[r][c];
+					if (Arrays.deepEquals(result, winBoard)) {
+						System.out.println("Player Wins!");
+						return true;
+					}
+				}
+			}
 
-            for(int[] row: result) {
-                Arrays.fill(row, 0);
-            }
-            for (r = 0; r < computerBoard.length; r++) {
-                for (c = 0; c < computerBoard[r].length; c++) {
-                    result[r][c] = computerBoard[r][c] & winBoard[r][c];
-                    if (Arrays.deepEquals(result, winBoard)) {
-                        System.out.println("Computer Wins!");
-                        return true;
-                    }
-                }
-            }
-        }
-
-        if(gameCount == 9) return true;
-        gameCount++;
-        return false;
-	}
-
-
-	public void play() {
-		while(!gameOver()) {
-            computerMove();
-            drawBoard();
-            if(!gameOver()) playerMove();
-            else break;
+			for (int[] row : result) {
+				Arrays.fill(row, 0);
+			}
+			for (r = 0; r < computerBoard.length; r++) {
+				for (c = 0; c < computerBoard[r].length; c++) {
+					result[r][c] = computerBoard[r][c] & winBoard[r][c];
+					if (Arrays.deepEquals(result, winBoard)) {
+						System.out.println("Computer Wins!");
+						return true;
+					}
+				}
+			}
 		}
+
+		if (gameCount == 9) return true;
+		gameCount++;
+		return false;
 	}
 
-	public static void main(String args[]) {
-		TicTacToe myGame = new TicTacToe();
-		myGame.play();
-	}
+    @Override
+    public void applyMove(Move move) {
+
+    }
+
+    @Override
+    public Game forecastMove(Move move) {
+        return null;
+    }
+
+    @Override
+    public Game copy() {
+        return null;
+    }
+
+    @Override
+    public List<Move> getLegalMoves() {
+        return null;
+    }
+
+    @Override
+    public List<Move> getOpponentMoves() {
+        return null;
+    }
+
+    @Override
+    public boolean isWinner(Player player) {
+        return false;
+    }
+
+    @Override
+    public boolean isOpponentWinner(Player player) {
+        return false;
+    }
+
+    public Player getInactivePlayer() {
+        return inactivePlayer;
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
 }
 
