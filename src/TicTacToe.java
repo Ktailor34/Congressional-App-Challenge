@@ -8,15 +8,15 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe implements Game {
-	Scanner scan = new Scanner(System.in);
+
 	Random generator = new Random();
-	private int[][] board;
+	public int[][] board;
 	private int[][] playerBoard;
 	private int[][] computerBoard;
 	private int[][][] winConditions;
 	private Player activePlayer;
 	private Player inactivePlayer;
-	private final int SIZE = 3;
+	public final int SIZE = 3;
     private int gameCount;
 
 	// Constructor
@@ -89,23 +89,11 @@ public class TicTacToe implements Game {
 		}
 	}
 
-	private void playerMove() {
-		boolean flag = true;
-		while(flag) {
-			System.out.print("Pick spots 1 - 9: ");
-			int selection = scan.nextInt();
-			if(selection > 0 && selection <=9) {
-				flag = false;
-				board[(selection - 1)/3][(selection - 1) % 3] = 1;
-				playerBoard[(selection -1)/3][(selection - 1) % 3] = 1;
-			}
-			else {
-				System.out.println("Incorrect input. Try again.");
-			}
-		}
-	}
+	public void playerMove() {
 
-	private void computerMove() {
+	 }
+
+	public void computerMove() {
 		int compPlacement = generator.nextInt(9);
 		boolean moveMade = false;
 
